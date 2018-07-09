@@ -1,26 +1,25 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Image from "../img/Img";
 
 class App extends Component {
   state = {
     loading: true,
-  }
+    images: [],
+    currentImage: null
+  };
 
   componentWillMount = async () => {
-    const response = await fetch('/api/ping')
-    const json = await response.json()
-    if (json.message) this.setState({ loading: false})
-  }
+    const response = await fetch("/api/images");
+    const json = await response.json();
+    if (json.images) this.setState({ loading: false, images: json.images });
+  };
 
   render() {
-    return (
-      <div className="App">
-        {
-          !this.state.loading &&
-          <h1>You've connected to the server!</h1>
-        }
-      </div>
-    );
+    const images = this.state.images.map(image => {
+      return <Image key={image.id} image={image} />;
+    });
+    return <div className="App">{!this.state.loading && images}</div>;
   }
 }
 
