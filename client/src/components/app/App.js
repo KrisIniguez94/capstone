@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Image from "../img/Img";
+import Header from "../header/Header";
 
 class App extends Component {
   state = {
