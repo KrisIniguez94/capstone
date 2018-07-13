@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Image from "../img/Img";
-import Header from "../header/Header";
+// import Header from "../header/Header";
 
 class App extends Component {
   state = {
@@ -25,3 +25,6 @@ class App extends Component {
 }
 
 export default App;
+// image container, will pss down state to modal image
+//image container o
+//map goes in images Component
