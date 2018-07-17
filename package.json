@@ -15,7 +15,10 @@
     "express": "^4.16.2",
     "knex": "^0.14.6",
     "morgan": "^1.9.0",
-    "pg": "^7.4.3"
+    "pg": "^7.4.3",
+    "react-materialize": "^2.3.3",
+    "semantic-ui-css": "^2.3.3",
+    "semantic-ui-react": "^0.82.0"
   },
   "devDependencies": {
     "nodemon": "^1.14.7"

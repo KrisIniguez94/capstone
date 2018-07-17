@@ -35,7 +35,8 @@ app.get("/api/images", (req, res, next) => {
         if (index !== 0 && image.id === collection[collection.length - 1].id) {
           collection[collection.length - 1].items.push({
             id: image.item_id,
-            name: image.name
+            name: image.name,
+            url: image.item_url
           });
         } else {
           // else create a new book

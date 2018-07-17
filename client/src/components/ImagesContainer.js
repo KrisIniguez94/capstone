@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Image from "./Image";
-import Modal from "./Modal";
+import MogulModal from "./MogulModal";
 
 class ImagesContainer extends Component {
   state = {
@@ -19,6 +19,10 @@ class ImagesContainer extends Component {
     if (json.images) this.setState({ loading: false, images: json.images });
   };
 
+  closeModal = () => {
+    this.setState({ currentImage: null });
+  };
+
   render() {
     const images = this.state.images.map(image => {
       return <Image showItems={this.showItems} key={image.id} image={image} />;
@@ -32,7 +36,7 @@ class ImagesContainer extends Component {
       );
       return (
         <div>
-          <Modal image={image} />
+          <MogulModal image={image} closeModal={this.closeModal} />
           {images}
         </div>
       );
