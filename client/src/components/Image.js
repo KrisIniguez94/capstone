@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Image extends Component {
   render() {
-    const { url, id } = this.props.image;
+    const { url, id, items } = this.props.image;
     return (
       <div
         style={{
@@ -16,7 +16,10 @@ class Image extends Component {
           border: "1px solid #CCC",
           margin: "1em"
         }}
-        onClick={() => this.props.showItems(id)}
+        onClick={() => {
+          const itemId = items.length > 0 ? items[0].id : null;
+          this.props.showItems(id, itemId);
+        }}
       />
     );
   }

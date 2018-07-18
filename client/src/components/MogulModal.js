@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import { Button, Header, Image, Modal, Icon } from "semantic-ui-react";
+import { Header, Image, Modal } from "semantic-ui-react";
 
 class MogulModal extends Component {
-  state = {
-    currentItem: 0
-  };
-
   render() {
     if (!this.props.image) {
       return null;
@@ -13,25 +9,38 @@ class MogulModal extends Component {
       const items = this.props.image.items.map(item => {
         return (
           <div key={item.id}>
-            <Image wrapped size="small" src={item.url} />
+            <Image
+              onClick={() => this.props.displayItem(item.id)}
+              wrapped
+              size="small"
+              src={item.url}
+            />
           </div>
         );
       });
+      const item = this.props.image.items.find(
+        i => i.id === this.props.currentItem
+      );
+      let thumbnailPicker;
+      if (this.props.image.items) {
+        thumbnailPicker = (
+          <div
+            style={{
+              width: "100px"
+            }}
+          >
+            {items}
+          </div>
+        );
+      }
       return (
         <Modal open={true} onClose={this.props.closeModal}>
           <Modal.Header>{this.props.image.name}</Modal.Header>
           <Modal.Content image>
-            <div
-              style={{
-                width: "100px"
-              }}
-            >
-              {items}
-            </div>
+            {thumbnailPicker}
+            <Image wrapped size="large" src={item ? item.url : null} />
             <div>
-              <Header>
-                {this.props.image.items[this.state.currentItem].name}
-              </Header>
+              <Header>{item ? item.name : "Nah Chill Fam"}</Header>
             </div>
           </Modal.Content>
         </Modal>

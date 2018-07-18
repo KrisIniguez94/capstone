@@ -6,21 +6,23 @@ class ImagesContainer extends Component {
   state = {
     loading: true,
     images: [],
-    currentImage: null
+    currentImage: null,
+    currentItem: null
   };
-  showItems = id => {
-    this.setState({ currentImage: id });
+  showItems = (id, itemId) => {
+    this.setState({ currentImage: id, currentItem: itemId });
     console.log("You clicked me");
   };
-
+  displayItem = id => {
+    this.setState({ currentItem: id });
+  };
+  closeModal = () => {
+    this.setState({ currentImage: null });
+  };
   componentWillMount = async () => {
     const response = await fetch("/api/images");
     const json = await response.json();
     if (json.images) this.setState({ loading: false, images: json.images });
-  };
-
-  closeModal = () => {
-    this.setState({ currentImage: null });
   };
 
   render() {
@@ -36,7 +38,13 @@ class ImagesContainer extends Component {
       );
       return (
         <div>
-          <MogulModal image={image} closeModal={this.closeModal} />
+          <MogulModal
+            currentImage={this.state.currentImage}
+            displayItem={this.displayItem}
+            currentItem={this.state.currentItem}
+            image={image}
+            closeModal={this.closeModal}
+          />
           {images}
         </div>
       );
