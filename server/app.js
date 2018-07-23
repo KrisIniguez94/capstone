@@ -57,6 +57,13 @@ app.get("/", (req, res, next) => {
   const index = path.join(__dirname, "../client/build/index.html");
   res.sendFile(index);
 });
+
+app.post("/api/users", (req, res, next) => {
+  res.status(200).json({
+    name: "Kris",
+    email: "Kris.Iniguez.94@gmail.com"
+  });
+});
 // handle error
 app.use((err, req, res, next) => {
   const status = err.status || 500;

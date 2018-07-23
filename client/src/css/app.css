@@ -1,0 +1,248 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol,
+ul {
+  list-style: none; }
+
+blockquote,
+q {
+  quotes: none; }
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.app-form-item {
+  margin: 0 0 15px 0; }
+  .app-form-item label {
+    text-transform: uppercase;
+    display: block;
+    font-weight: 400;
+    margin-left: 0 0 8px 0; }
+  .app-form-item input[type="text"],
+  .app-form-item input[type="email"],
+  .app-form-item input[type="password"],
+  .app-form-item textarea {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    outline: 0 none;
+    padding: 8px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px; }
+    .app-form-item input[type="text"]:focus,
+    .app-form-item input[type="text"] :active,
+    .app-form-item input[type="email"]:focus,
+    .app-form-item input[type="email"] :active,
+    .app-form-item input[type="password"]:focus,
+    .app-form-item input[type="password"] :active,
+    .app-form-item textarea:focus,
+    .app-form-item textarea :active {
+      outline: 0 none; }
+  .app-form-item textarea {
+    min-height: 50px; }
+  .app-form-item.error input {
+    color: #d0152e; }
+
+.app-form-actions .app-button {
+  width: 108%;
+  text-align: center;
+  display: block;
+  font-weight: 800;
+  color: #1b65f6;
+  border: 1px solid #1b65f6;
+  background: #ffffff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px 15px;
+  text-transform: uppercase; }
+  .app-form-actions .app-button.primary {
+    width: 108%;
+    background: #1b65f6;
+    color: #ffffff; }
+  .app-form-actions .app-button.app-button-link {
+    background: none;
+    border: 0 none;
+    color: #1b65f6; }
+  .app-form-actions .app-button.app-button-link {
+    background: none;
+    border: 0 none;
+    color: #1b65f6; }
+
+.app-top-bar {
+  color: black;
+  height: 50px;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1000; }
+  .app-top-bar .app-top-bar-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex; }
+    .app-top-bar .app-top-bar-inner .app-top-bar-left {
+      flex-grow: 1; }
+    .app-top-bar .app-top-bar-inner .app-top-bar-right {
+      text-align: right; }
+      .app-top-bar .app-top-bar-inner .app-top-bar-right .app-top-bar-right-inner {
+        display: flex; }
+  .app-top-bar .user-profile-picture {
+    padding-top: 10px; }
+    .app-top-bar .user-profile-picture img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%; }
+  .app-top-bar .user-profile-menu {
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    list-style: none; }
+    .app-top-bar .user-profile-menu li {
+      padding: 0 10px;
+      line-height: 50px; }
+
+.app-login-form {
+  background: #ffffff;
+  position: fixed;
+  right: 0;
+  top: 0;
+  min-width: 300px;
+  bottom: 0;
+  z-index: 1001; }
+  .app-login-form .form-title {
+    padding: 20px 0;
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+    display: block; }
+  .app-login-form .app-login-form-inner {
+    position: relative;
+    padding: 40px; }
+  .app-login-form .app-form-actions button {
+    margin: 10px 0; }
+  .app-login-form .app-form-description {
+    text-align: center; }
+  .app-login-form .app-dismiss-button {
+    position: absolute;
+    right: 20px;
+    top: 20px; }
+
+.user-signin-button {
+  cursor: pointer; }
+
+/*# sourceMappingURL=app.css.map */
