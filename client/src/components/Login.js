@@ -1,9 +1,15 @@
 import React, { Component } from "react";
+import _ from "lodash";
+import classNames from "classnames";
+import { isEmail } from "../helpers/email";
+import { createUser, login } from "../helpers/user";
+import axios from "axios";
 
 class LoginForm extends Component {
   constructor() {
     super();
     this.state = {
+      message: null,
       isLogin: true,
       user: {
         name: "",
@@ -23,21 +29,136 @@ class LoginForm extends Component {
     this.onTextFieldChange = this.onTextFieldChange.bind(this);
     this.formValidation = this.formValidation.bind(this);
   }
-  formValidation(callback = () => {}) {
-    const { isLogin } = this.state;
-    console.log("Finna validate the form b");
-    const isValid = true;
+  formValidation(fieldsToValidate = [], callback = () => {}) {
+    const { isLogin, user } = this.state;
+    const allFields = {
+      name: {
+        message: "Your name is required.",
+        doValidate: () => {
+          const value = _.trim(_.get(user, "name", ""));
 
-    callback(isValid);
+          if (value.length > 0) {
+            return true;
+          }
+
+          return false;
+        }
+      },
+
+      email: {
+        message: "Email is not correct",
+        doValidate: () => {
+          const value = _.get(user, "email", "");
+
+          if (value.length > 0 && isEmail(value)) {
+            return true;
+          }
+          return false;
+        }
+      },
+
+      password: {
+        message: "Password shoud has more than 3 characters.",
+        doValidate: () => {
+          const value = _.get(user, "password", "");
+
+          if (value && value.length > 3) {
+            return true;
+          }
+
+          return false;
+        }
+      },
+
+      confirmPassword: {
+        message: "Password does not match.",
+        doValidate: () => {
+          const passwordValue = _.get(user, "password");
+          const value = _.get(user, "confirmPassword", "");
+
+          if (passwordValue === value) {
+            return true;
+          }
+
+          return false;
+        }
+      }
+    };
+
+    let errors = this.state.error;
+
+    _.each(fieldsToValidate, field => {
+      const fieldValidate = _.get(allFields, field);
+      if (fieldValidate) {
+        errors[field] = null;
+
+        const isFieldValid = fieldValidate.doValidate();
+
+        if (isFieldValid === false) {
+          errors[field] = _.get(fieldValidate, "message");
+        }
+      }
+    });
+
+    this.setState(
+      {
+        error: errors
+      },
+      () => {
+        console.log("After processed validation the form errors", errors);
+
+        let isValid = true;
+
+        _.each(errors, err => {
+          if (err) {
+            isValid = false;
+          }
+        });
+
+        callback(isValid);
+      }
+    );
   }
 
   onSubmit(event) {
     const { isLogin, user } = this.state;
     event.preventDefault();
-    this.formValidation(isValid => {
+    let fieldNeedToValidate = ["email", "password"];
+    if (!isLogin) {
+      fieldNeedToValidate = ["name", "email", "password", "confirmPassword"];
+    }
+
+    this.formValidation(fieldNeedToValidate, isValid => {
       console.log("The form is validated?", isValid);
+      if (isValid) {
+        if (isLogin) {
+          login(this.state.user.email, this.state.user.password.then)(
+            response => {
+              this.setState({
+                message: {
+                  type: "success",
+                  message: "Login successful."
+                }
+              });
+            }
+          ).catch(err => {
+            this.setState({
+              message: {
+                type: "error",
+                message: "An error login!"
+              }
+            });
+            console.log(err);
+          });
+        } else {
+          createUser(this.state.user).then(response => {
+            console.log("Hey i got data after send post", response);
+          });
+        }
+      }
     });
   }
+
   onTextFieldChange(e) {
     let { user } = this.state;
     const fieldName = e.target.name;
@@ -47,7 +168,7 @@ class LoginForm extends Component {
     this.setState({ user: user });
   }
   render() {
-    const { isLogin, user } = this.state;
+    const { isLogin, user, error, message } = this.state;
     const title = isLogin ? "Sign In" : "Sign Up";
     return (
       <div className="app-login-form">
@@ -64,9 +185,18 @@ class LoginForm extends Component {
           </button>
           <h2 className="form-title">{title}</h2>
           <form onSubmit={this.onSubmit}>
+            {message ? (
+              <div className="app-message">
+                <p className={message.type}>{message.message}</p>
+              </div>
+            ) : null}
             {!isLogin ? (
               <div>
-                <div className="app-form-item">
+                <div
+                  className={classNames("app-form-item", {
+                    error: _.get(error, "name")
+                  })}
+                >
                   <label htmlFor="name-id">Name</label>
                   <input
                     value={user.name}
@@ -79,7 +209,11 @@ class LoginForm extends Component {
                 </div>
               </div>
             ) : null}
-            <div className="app-form-item">
+            <div
+              className={classNames("app-form-item", {
+                error: _.get(error, "email")
+              })}
+            >
               <label htmlFor="email-id">Email</label>
               <input
                 value={user.email}
@@ -90,7 +224,11 @@ class LoginForm extends Component {
                 name="email"
               />
             </div>
-            <div className="app-form-item">
+            <div
+              className={classNames("app-form-item", {
+                error: _.get(error, "password")
+              })}
+            >
               <label htmlFor="password-id">Password</label>
               <input
                 value={user.password}
@@ -103,7 +241,11 @@ class LoginForm extends Component {
             </div>
             {!isLogin ? (
               <div>
-                <div className="app-form-item">
+                <div
+                  className={classNames("app-form-item", {
+                    error: _.get(error, "confirmPassword")
+                  })}
+                >
                   <label htmlFor="confirm-password-id">Confirm Password</label>
                   <input
                     value={user.confirmPassword}
@@ -120,32 +262,36 @@ class LoginForm extends Component {
               <div className="app-form-actions">
                 <button className="app-button primary">Sign In</button>
                 <div className="app-form-description">
-                  <div>Dont have an account</div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      this.setState({ isLogin: false });
-                    }}
-                    className="app-button app-button-link"
-                  >
-                    Sign Up
-                  </button>
+                  <div>
+                    Dont have an account
+                    <button
+                      type="button"
+                      onClick={() => {
+                        this.setState({ isLogin: false });
+                      }}
+                      className="app-button app-button-link"
+                    >
+                      Sign Up
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (
               <div className="app-form-actions">
                 <button className="app-button primary">Sign Up</button>
                 <div className="app-form-description">
-                  <div>Dont have an account</div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      this.setState({ isLogin: true });
-                    }}
-                    className="app-button app-button-link"
-                  >
-                    Sign In
-                  </button>
+                  <div>
+                    Dont have an account
+                    <button
+                      type="button"
+                      onClick={() => {
+                        this.setState({ isLogin: true });
+                      }}
+                      className="app-button app-button-link"
+                    >
+                      Sign In
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

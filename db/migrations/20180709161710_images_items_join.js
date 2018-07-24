@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.integer("image_id").references("images.id");
       table.integer("item_id").references("items.id");
+      table.integer("description_id").references("descriptions_id");
     })
   ]);
 };

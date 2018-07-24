@@ -10,6 +10,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      currentUser: 1,
       showLoginForm: false
     };
   }
@@ -40,6 +41,6 @@ class App extends Component {
     );
   }
 }
-
+//create a post requests that updates fav db When i click itll take the id of item and id of user and post to a route that creates anew favorite.
 export default App;
 // image container, will pss down state to modal image

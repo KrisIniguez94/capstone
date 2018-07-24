@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string("url");
     table.string("name");
+    table.string("description");
     table.timestamps(true, true);
   });
 };

@@ -1,7 +1,16 @@
 import React, { Component } from "react";
 import { Header, Image, Modal } from "semantic-ui-react";
+import axios from "axios";
 
 class MogulModal extends Component {
+  likeImage = id => {
+    console.log("hey you clicked: ", id);
+
+    axios.post(`/api/items/favorites/${id}`, {}).then(result => {
+      console.log(result.data);
+    });
+  };
+
   render() {
     if (!this.props.image) {
       return null;
@@ -41,6 +50,7 @@ class MogulModal extends Component {
             <Image wrapped size="large" src={item ? item.url : null} />
             <div>
               <Header>{item ? item.name : "Nah Chill Fam"}</Header>
+              <span onClick={() => this.likeImage(item.id)}>Like</span>
             </div>
           </Modal.Content>
         </Modal>
