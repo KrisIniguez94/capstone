@@ -30,14 +30,14 @@ app.get("/api/images", (req, res, next) => {
     )
     .leftJoin("images_items", "images.id", "images_items.image_id")
     .leftJoin("items", "images_items.item_id", "items.id")
-    .leftJoin("items_users", "items.id", "items_users.item_id")
-    // .leftJoin("items_users", () => {
-    //   this.on("items.id", "=", "items_users.item_id").andOn(
-    //     "items_users.user_id",
-    //     "=",
-    //     1
-    //   );
-    // })
+    // .leftJoin("items_users", "items.id", "items_users.item_id")
+    .leftJoin("items_users", function() {
+      this.on("items.id", "=", "items_users.item_id").andOn(
+        "items_users.user_id",
+        "=",
+        1
+      );
+    })
     .then(originalResults => {
       console.log(originalResults);
       const result = originalResults.reduce((collection, image, index) => {

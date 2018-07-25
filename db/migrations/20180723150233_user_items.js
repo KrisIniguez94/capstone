@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.integer("user_id").references("users.id");
       table.integer("item_id").references("items.id");
+      table.unique(["user_id", "item_id"]);
     })
   ]);
 };

@@ -5,10 +5,19 @@ var knex = require("../../db/knex");
 router.post("/favorites/:id", (req, res, next) => {
   knex("items_users")
     .insert({ item_id: req.params.id, user_id: 1 })
-    .then(() => {
-      knex("items_users")
-        .orderBy("id", "desc")
-        .then(item => res.json(item));
+    .returning("id")
+    .then(response => {
+      res.json(response);
     });
 });
+
+router.delete("/favorites/:id", (req, res, next) => {
+  knex("items_users")
+    .del()
+    .where("id", req.params.id)
+    .then(response => {
+      res.json(response);
+    });
+});
+
 module.exports = router;

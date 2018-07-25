@@ -9,6 +9,21 @@ class ImagesContainer extends Component {
     currentImage: null,
     currentItem: null
   };
+
+  updateLike = (imageId, itemId) => {
+    const newImages = [...this.state.images].map(image => {
+      if (image.id === imageId) {
+        const newImage = { ...image };
+        newImage.items = image.items.map(item => {
+          item.id === itemId ? { ...item, liked: !item.liked } : item;
+        });
+        return newImage;
+      } else {
+        return image;
+      }
+    });
+    this.setState({ images: newImages });
+  };
   showItems = (id, itemId) => {
     this.setState({ currentImage: id, currentItem: itemId });
     console.log("You clicked me");
@@ -44,6 +59,7 @@ class ImagesContainer extends Component {
             currentItem={this.state.currentItem}
             image={image}
             closeModal={this.closeModal}
+            updateLike={this.updateLike}
           />
           {images}
         </div>
