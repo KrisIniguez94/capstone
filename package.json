@@ -21,7 +21,8 @@
     "react-materialize": "^2.3.3",
     "react-reveal": "^1.2.2",
     "semantic-ui-css": "^2.3.3",
-    "semantic-ui-react": "^0.82.0"
+    "semantic-ui-react": "^0.82.0",
+    "yarn": "^1.9.2"
   },
   "devDependencies": {
     "nodemon": "^1.14.7"
