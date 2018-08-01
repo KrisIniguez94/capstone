@@ -49,14 +49,14 @@ class MogulModal extends Component {
         );
       }
       return (
-        <Modal open={true} onClose={this.props.closeModal}>
+        <Modal centered={false} open={true} onClose={this.props.closeModal}>
           <Modal.Header>{this.props.image.name}</Modal.Header>
           <Modal.Content image>
             {thumbnailPicker}
             <Image wrapped size="large" src={item ? item.url : null} />
             <div>
               <Header>{item ? item.name : "Nah Chill Fam"}</Header>
-              {item.liked ? (
+              {item && item.liked ? (
                 <span onClick={() => this.unlikeImage(item.id)}>Unlike</span>
               ) : (
                 <span onClick={() => this.likeImage(item.id)}>Like</span>

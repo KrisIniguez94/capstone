@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
-import Header from "../header/Header";
+import Label from "../header/Header";
 import ImagesContainer from "../ImagesContainer";
 import LoginForm from "../Login";
 import TopBar from "../TopBar";
+import NavBar from "../NavBar";
+import Favorites from "../Favorites";
+import FooterBar from "../Footer";
 
 class App extends Component {
   constructor(props) {
@@ -18,25 +21,32 @@ class App extends Component {
     const { showLoginForm } = this.state;
     return (
       <div className={"app-layout"}>
-        <TopBar
-          showLoginForm={() => {
-            this.setState({
-              showLoginForm: true
-            });
-          }}
-        />
-
-        {showLoginForm ? (
-          <LoginForm
-            onClose={() => {
+        <div className="container">
+          <TopBar
+            showLoginForm={() => {
               this.setState({
-                showLoginForm: false
+                showLoginForm: true
               });
             }}
           />
-        ) : null}
-        <Header />
-        <ImagesContainer />
+
+          {showLoginForm ? (
+            <LoginForm
+              onClose={() => {
+                this.setState({
+                  showLoginForm: false
+                });
+              }}
+            />
+          ) : null}
+          <Label />
+          <NavBar />
+          <ImagesContainer />
+          <Favorites />
+        </div>
+        <div>
+          <FooterBar />
+        </div>
       </div>
     );
   }

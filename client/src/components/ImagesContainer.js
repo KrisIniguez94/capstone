@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Image from "./Image";
 import MogulModal from "./MogulModal";
+import Fade from "react-reveal/Fade";
 
 class ImagesContainer extends Component {
   state = {
@@ -15,7 +16,7 @@ class ImagesContainer extends Component {
       if (image.id === imageId) {
         const newImage = { ...image };
         newImage.items = image.items.map(item => {
-          item.id === itemId ? { ...item, liked: !item.liked } : item;
+          return item.id === itemId ? { ...item, liked: !item.liked } : item;
         });
         return newImage;
       } else {
@@ -61,7 +62,7 @@ class ImagesContainer extends Component {
             closeModal={this.closeModal}
             updateLike={this.updateLike}
           />
-          {images}
+          <Fade>{images}</Fade>
         </div>
       );
     }

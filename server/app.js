@@ -15,7 +15,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //like link that will create the record;
+// SELECT * FROM items JOIN items_users on items.id= items_users.item_id and items_users.user_id=1
 
+app.get("api/favorites", (req, res, next) => {
+  knex("items").select("item.id", "item.url");
+});
 app.get("/api/images", (req, res, next) => {
   // knex("images").then(images => res.json({ images: images }));
   knex("images")

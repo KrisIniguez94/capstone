@@ -2,7 +2,7 @@
 }
 
 .App-header {
-  background-color: #CCC;
+  background-color: #ccc;
   padding: 10px;
   color: white;
 }
@@ -18,4 +18,8 @@
 
 .App-message {
   font-weight: bold;
+}
+
+.app-layout {
+  padding-bottom: 70px;
 }

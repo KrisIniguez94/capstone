@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { Header } from "semantic-ui-react";
 
-class Header extends Component {
-  render() {
-    return <h1 style={{ textAlign: "center" }}>Mogul</h1>;
-  }
-}
+const Label = () => (
+  <Header as="h1" textAlign="center">
+    Mogul
+  </Header>
+);
 
-export default Header;
+export default Label;
